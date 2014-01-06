@@ -10,68 +10,29 @@ describe("Rock-Paper-Scissors", function() {
   });
 
   describe('winning and losing', function() {
-
-    describe('rock', function() {
-
-      it('should beat scissors', function() {
-
-        player1.picks('rock');
-        player2.picks('scissors');
-        expect(game.winner()).toBe(player1);
-
+    it('pairs should win/lose according to the rules', function() {
+      var pairs = [['paper', 'rock'],
+                  ['paper', 'spock'],
+                  ['rock', 'scissors'],
+                  ['rock', 'lizard'],
+                  ['lizard', 'spock'],
+                  ['lizard', 'paper'],
+                  ['spock', 'scissors'],
+                  ['spock', 'rock'],
+                  ['scissors', 'lizard'],
+                  ['scissors', 'paper']];
+      outcomes = pairs.map(function([winner, loser]) {
+        player1.picks(winner);
+        player2.picks(loser);
+        return game.winner();
       });
-
-      it('should lose to paper', function() {
-
-        player1.picks('rock');
-        player2.picks('paper');
-        expect(game.winner()).toBe(player2);
-
-      });
-
+      function isPlayer1(element, index, array) {
+        return (element === player1);
+      };
+      expect(outcomes.every(isPlayer1)).toBe(true);
     });
-
-    describe('paper', function() {
-
-      it('should beat rock', function() {
-
-        player1.picks('paper');
-        player2.picks('rock');
-        expect(game.winner()).toBe(player1);
-
-      });
-
-      it('should lose to scissors', function() {
-
-        player1.picks('paper');
-        player2.picks('scissors');
-        expect(game.winner()).toBe(player2);
-
-      });
-
-    });
-
-    describe('scissors', function() {
-
-      it('should beat paper', function() {
-
-        player1.picks('scissors');
-        player2.picks('paper');
-        expect(game.winner()).toBe(player1);
-
-      });
-
-      it('should lose to rock', function() {
-
-        player1.picks('scissors');
-        player2.picks('rock');
-        expect(game.winner()).toBe(player2);
-
-      });
-
-    });
-
   });
+
 
   describe('draws', function() {
 
